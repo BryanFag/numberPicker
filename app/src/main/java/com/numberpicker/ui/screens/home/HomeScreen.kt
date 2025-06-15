@@ -1,5 +1,4 @@
-package com.numberpicker.ui.screens
-
+package com.numberpicker.ui.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -39,7 +39,8 @@ import androidx.compose.ui.unit.sp
 import com.numberpicker.R
 
 @Composable
-fun DrawScreen() {
+fun HomeScreen(onNavigateToDraw: () -> Unit) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,8 +81,7 @@ fun DrawScreen() {
          */
         Column(
             modifier = Modifier
-                .padding(start = 25.dp, end = 25.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(start = 25.dp, end = 25.dp)
         )
         {
             Text(
@@ -92,8 +92,7 @@ fun DrawScreen() {
                     brush = Brush.linearGradient(
                         colors = listOf(
                             Color(0xFFC7C9CC),
-                            Color(0xFF797979)
-                        )),
+                            Color(0xFF797979))),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily(Font(R.font.sora))
@@ -112,18 +111,19 @@ fun DrawScreen() {
             Text(
                 modifier = Modifier
                     .padding(top = 40.dp),
-
-                text = "resultado do sorteio".uppercase(),
+                text = "QUERO SORTEAR:",
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 25.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.Medium,
                 )
             )
             Text(
                 modifier = Modifier
                     .padding(top = 5.dp),
-                text = "1º resultado".uppercase(),
+                text = "Defina o intervalo e a quantidade de números," +
+                        " clique em \"Sortear\" e veja os resultados na" +
+                        " tela. É rápido e fácil!",
                 style = TextStyle(
                     color = Color.LightGray,
                     fontSize = 18.sp,
@@ -138,72 +138,156 @@ fun DrawScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 40.dp),
-                horizontalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.Center,
 
-                ) {
+            ) {
                 Column(
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = "1",
+                    text = "NÚMEROS".uppercase(),
+                    Modifier.padding(bottom = 10.dp),
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontFamily = FontFamily(Font(R.font.sora)))
+                )
+                    Box(
+                        modifier = Modifier
+                            .background(Color.Gray,
+                                shape = RoundedCornerShape(8.dp))
+                            .height(85.dp)
+                            .width(85.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "1",
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 40.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = FontFamily(Font(R.font.sora))
+                            )
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.padding(end = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text(
+                        text = "de".uppercase(),
+                        Modifier.padding(bottom = 10.dp),
                         style = TextStyle(
                             color = Color.White,
-                            fontSize = 40.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora))
-                        )
+                            fontFamily = FontFamily(Font(R.font.sora)))
                     )
+                    Box(
+                        modifier = Modifier
+                            .background(Color.Gray,
+                                shape = RoundedCornerShape(8.dp))
+                            .height(85.dp)
+                            .width(85.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "1",
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 40.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = FontFamily(Font(R.font.sora))
+                            )
+                        )
+                    }
                 }
                 Column(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-                ) {
+                    modifier = Modifier.padding(end = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
                     Text(
-                        text = "1",
+                        text = "até".uppercase(),
+                        Modifier.padding(bottom = 10.dp),
                         style = TextStyle(
                             color = Color.White,
-                            fontSize = 40.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora))
-                        )
+                            fontFamily = FontFamily(Font(R.font.sora)))
                     )
-                }
-                Column(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-                ) {
-                    Text(
-                        text = "1",
-                        style = TextStyle(
-                            color = Color.White,
-                            fontSize = 40.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora))
+                    Box(
+                        modifier = Modifier
+                            .background(Color.Gray,
+                                shape = RoundedCornerShape(8.dp))
+                            .height(85.dp)
+                            .width(85.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "1",
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 40.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = FontFamily(Font(R.font.sora))
+                            )
                         )
-                    )
+                    }
                 }
+            }
+
+            Row(
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
+                var isChecked by remember { mutableStateOf(true) }
+                Switch(
+                    modifier = Modifier,
+                    checked = isChecked,
+                    onCheckedChange = { isChecked = it },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = Color(0xFF15f4ee),
+                        uncheckedThumbColor = Color.White,
+                        uncheckedTrackColor = Color.LightGray
+                    )
+                )
+                Text(
+                    modifier = Modifier.padding(top = 15.dp, start = 10.dp),
+                    text = "Não repetir números",
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.sora))
+                    )
+                )
             }
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 30.dp)
                     .height(60.dp),
-                onClick = { /*TODO*/ },
+                onClick = onNavigateToDraw,
                 shape = RoundedCornerShape(8.dp),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF15f4ee),
                     contentColor = Color.White
                 )
             ) {
                 Text(
-                    text = "SORTEAR NOVAMENTE",
+                    text = "SORTEAR",
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily(Font(R.font.sora))
                     )
                 )
                 Icon(
                     modifier = Modifier.padding(start = 10.dp),
-                    painter = painterResource(id = R.drawable.outline_frame_reload_24),
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = "Sortear",
                     tint = Color.White,
                 )
@@ -268,5 +352,7 @@ fun DrawScreen() {
 )
 @Composable
 private fun PreviewScreen() {
-    DrawScreen()
+    HomeScreen(
+        onNavigateToDraw = TODO()
+    )
 }
