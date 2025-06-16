@@ -1,5 +1,6 @@
 package com.numberpicker.ui.screens.draw
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,10 +30,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.numberpicker.R
+import com.numberpicker.ui.screens.home.HomeViewModel
+import kotlin.math.log
 
 @Composable
-fun DrawScreen(onBack: () -> Unit) {
+fun DrawScreen(
+    onBack: () -> Unit,
+    number: Int?,
+    ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,7 +146,7 @@ fun DrawScreen(onBack: () -> Unit) {
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = "1",
+                        text = number?.toString() ?: "-",
                         style = TextStyle(
                             color = Color.Cyan,
                             fontSize = 40.sp,
@@ -149,7 +159,7 @@ fun DrawScreen(onBack: () -> Unit) {
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = "1",
+                        text = number?.toString() ?: "-",
                         style = TextStyle(
                             color = Color.Cyan,
                             fontSize = 40.sp,
@@ -162,7 +172,7 @@ fun DrawScreen(onBack: () -> Unit) {
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = "1",
+                        text = number?.toString() ?: "-",
                         style = TextStyle(
                             color = Color.Cyan,
                             fontSize = 40.sp,
@@ -260,6 +270,7 @@ fun DrawScreen(onBack: () -> Unit) {
 @Composable
 private fun PreviewScreen() {
     DrawScreen(
-        onBack = TODO()
+        onBack = {},
+        number = 42
     )
 }

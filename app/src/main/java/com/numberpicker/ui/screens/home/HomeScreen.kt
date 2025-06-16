@@ -1,6 +1,10 @@
 package com.numberpicker.ui.screens.home
+
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +19,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -28,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -36,10 +43,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.numberpicker.R
 
 @Composable
-fun HomeScreen(onNavigateToDraw: () -> Unit) {
+fun HomeScreen(
+    onNavigateToDraw: (Any?) -> Unit,
+    onValueSelected: (Int) -> Unit) {
+
+    val viewModel: HomeViewModel = viewModel()
+
+    var quantity by remember { mutableStateOf(1) }
+    var minValue by remember { mutableStateOf(1) }
+    var maxValue by remember { mutableStateOf(1) }
 
     Column(
         modifier = Modifier
@@ -142,27 +158,30 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
 
             ) {
                 Column(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+                    modifier = Modifier.padding(end = 20.dp)
                 ) {
                     Text(
-                    text = "NÚMEROS".uppercase(),
-                    Modifier.padding(bottom = 10.dp),
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        fontFamily = FontFamily(Font(R.font.sora)))
-                )
+                        text = "NÚMEROS".uppercase(),
+                        Modifier.padding(bottom = 10.dp),
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontFamily = FontFamily(Font(R.font.sora))
+                        )
+                    )
+
+                    var selectNumberDraw by remember { mutableStateOf(false) }
                     Box(
                         modifier = Modifier
-                            .background(Color.Gray,
-                                shape = RoundedCornerShape(8.dp))
+                            .background(Color.Gray, shape = RoundedCornerShape(8.dp))
                             .height(85.dp)
-                            .width(85.dp),
+                            .width(85.dp)
+                            .clickable { selectNumberDraw = true },
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "1",
+                            text = quantity.toString(),
                             style = TextStyle(
                                 color = Color.White,
                                 fontSize = 40.sp,
@@ -170,9 +189,25 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                                 fontFamily = FontFamily(Font(R.font.sora))
                             )
                         )
+                        val context = LocalContext.current
+                        DropdownMenu(
+                            expanded = selectNumberDraw,
+                            onDismissRequest = { selectNumberDraw = false }
+                        ) {
+                            (1..5).forEach { number ->
+                                DropdownMenuItem(
+                                    text = { Text(number.toString()) },
+                                    onClick = {
+                                        quantity = number
+                                        onValueSelected(quantity)
+                                        Toast.makeText(context, "Quantidade: $number", Toast.LENGTH_SHORT).show()
+                                        selectNumberDraw = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
-
                 Column(
                     modifier = Modifier.padding(end = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -184,18 +219,21 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora)))
+                            fontFamily = FontFamily(Font(R.font.sora))
+                        )
                     )
+
+                    var expanded by remember { mutableStateOf(false) }
                     Box(
                         modifier = Modifier
-                            .background(Color.Gray,
-                                shape = RoundedCornerShape(8.dp))
+                            .background(Color.Gray, shape = RoundedCornerShape(8.dp))
                             .height(85.dp)
-                            .width(85.dp),
+                            .width(85.dp)
+                            .clickable { expanded = true },
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "1",
+                            text = minValue.toString(),
                             style = TextStyle(
                                 color = Color.White,
                                 fontSize = 40.sp,
@@ -203,6 +241,21 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                                 fontFamily = FontFamily(Font(R.font.sora))
                             )
                         )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            (1..100).forEach { number ->
+                                DropdownMenuItem(
+                                    text = { Text(number.toString()) },
+                                    onClick = {
+                                        minValue = number
+                                        onValueSelected(minValue)
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
                 Column(
@@ -216,18 +269,21 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora)))
+                            fontFamily = FontFamily(Font(R.font.sora))
+                        )
                     )
+
+                    var expanded by remember { mutableStateOf(false) }
                     Box(
                         modifier = Modifier
-                            .background(Color.Gray,
-                                shape = RoundedCornerShape(8.dp))
+                            .background(Color.Gray, shape = RoundedCornerShape(8.dp))
                             .height(85.dp)
-                            .width(85.dp),
+                            .width(85.dp)
+                            .clickable { expanded = true },
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "1",
+                            text = maxValue.toString(),
                             style = TextStyle(
                                 color = Color.White,
                                 fontSize = 40.sp,
@@ -235,6 +291,21 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                                 fontFamily = FontFamily(Font(R.font.sora))
                             )
                         )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            (minValue..100).forEach { number ->
+                                DropdownMenuItem(
+                                    text = { Text(number.toString()) },
+                                    onClick = {
+                                        maxValue = number
+                                        onValueSelected(maxValue)
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -270,7 +341,16 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
                     .fillMaxWidth()
                     .padding(top = 30.dp)
                     .height(60.dp),
-                onClick = onNavigateToDraw,
+                onClick = {
+                    viewModel.drawRandomNumber()
+                    val number = viewModel.randomNumber.value
+                    if (number != null) {
+                        onNavigateToDraw(number)
+                    } else {
+                        // Mostrar erro ou log
+                        Log.e("HomeScreen", "Número sorteado é nulo")
+                    }
+                },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF15f4ee),
@@ -353,6 +433,7 @@ fun HomeScreen(onNavigateToDraw: () -> Unit) {
 @Composable
 private fun PreviewScreen() {
     HomeScreen(
-        onNavigateToDraw = TODO()
+        onNavigateToDraw = {},
+        onValueSelected = {}
     )
 }
