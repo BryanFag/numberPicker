@@ -225,7 +225,7 @@ fun DrawScreen(
                 modifier = Modifier
                     .padding(top = 5.dp)
                     .fillMaxWidth(),
-                text = "Sim, você pode definir os valores" +
+                text = "Sim, você pode definir os valores " +
                         "mínimo e máximo para o intervalo dos números sorteados.",
                 style = TextStyle(
                     color = Color.White,
