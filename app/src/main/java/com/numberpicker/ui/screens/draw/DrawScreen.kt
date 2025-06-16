@@ -65,7 +65,7 @@ fun DrawScreen(
                 Modifier.padding(end = 12.dp)
             )
             Text(
-                text = "NUMBER PICKER".uppercase(),
+                text = "Sorteador Pro".uppercase(),
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 30.sp,
@@ -106,7 +106,7 @@ fun DrawScreen(
                 text = "SORTEADOR DE NÚMEROS",
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 50.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.ExtraBold,
                 )
             )
