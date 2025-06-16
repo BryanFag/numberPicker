@@ -190,6 +190,7 @@ fun HomeScreen(
                                 fontFamily = FontFamily(Font(R.font.sora))
                             )
                         )
+
                         val context = LocalContext.current
                         DropdownMenu(
                             expanded = selectNumberDraw,
@@ -311,6 +312,9 @@ fun HomeScreen(
                 }
             }
 
+            /**
+             * Toggle button, botão sortear e textos explicativos
+             */
             var noRepeatNumber by remember { mutableStateOf(true) }
             Row(
                 modifier = Modifier.padding(top = 20.dp)

@@ -12,6 +12,9 @@ class HomeViewModel : ViewModel() {
     private val _randomNumber = MutableStateFlow<List<Int>>(emptyList())
     val randomNumber: StateFlow<List<Int>> = _randomNumber
 
+    /**
+     * Sorteia os números aleatórios dentro do intervalo especificado.
+     */
     fun drawRandomNumber(quantity: Int, minValue: Int, maxValue: Int, noRepeatNumber: Boolean) {
         viewModelScope.launch {
             val number = if (noRepeatNumber) {
