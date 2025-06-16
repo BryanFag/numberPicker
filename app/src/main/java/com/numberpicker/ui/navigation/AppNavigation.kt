@@ -14,14 +14,23 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
-                onNavigateToDraw = { number ->
-                    navController.navigate("draw/$number")
+                onNavigateToDraw = { numbers ->
+                    val numbersList = when (numbers) {
+                        is List<*> -> numbers.filterIsInstance<Int>()
+                        is Int -> listOf(numbers)
+                        else -> emptyList()
+                    }
+                    val numbersString = numbersList.joinToString(",")
+                    navController.navigate("draw/$numbersString")
                 },
                 onValueSelected = {}
             )
         }
-        composable("draw/{number}") { backStackEntry ->
-            val number = backStackEntry.arguments?.getString("number")?.toIntOrNull()
+        composable("draw/{numbers}") { backStackEntry ->
+            val numbersString = backStackEntry.arguments?.getString("numbers")
+            val number = numbersString
+                ?.split(",")
+                ?.mapNotNull { it.toIntOrNull() }
             DrawScreen(
                 number = number,
                 onBack = {
@@ -30,5 +39,4 @@ fun AppNavigation() {
             )
         }
     }
-
 }

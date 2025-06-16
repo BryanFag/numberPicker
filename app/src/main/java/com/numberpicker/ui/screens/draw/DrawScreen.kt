@@ -38,7 +38,7 @@ import kotlin.math.log
 @Composable
 fun DrawScreen(
     onBack: () -> Unit,
-    number: Int?,
+    number: List<Int>?,
     ) {
 
     Column(
@@ -146,33 +146,7 @@ fun DrawScreen(
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = number?.toString() ?: "-",
-                        style = TextStyle(
-                            color = Color.Cyan,
-                            fontSize = 40.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora))
-                        )
-                    )
-                }
-                Column(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-                ) {
-                    Text(
-                        text = number?.toString() ?: "-",
-                        style = TextStyle(
-                            color = Color.Cyan,
-                            fontSize = 40.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontFamily = FontFamily(Font(R.font.sora))
-                        )
-                    )
-                }
-                Column(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-                ) {
-                    Text(
-                        text = number?.toString() ?: "-",
+                        text = number?.joinToString(", ") ?: "-",
                         style = TextStyle(
                             color = Color.Cyan,
                             fontSize = 40.sp,
@@ -271,6 +245,6 @@ fun DrawScreen(
 private fun PreviewScreen() {
     DrawScreen(
         onBack = {},
-        number = 42
+        number = listOf(10, 20, 30, 40, 50)
     )
 }

@@ -1,6 +1,5 @@
 package com.numberpicker.ui.screens.home
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -310,14 +309,14 @@ fun HomeScreen(
                 }
             }
 
+            var noRepeatNumber by remember { mutableStateOf(true) }
             Row(
                 modifier = Modifier.padding(top = 20.dp)
             ) {
-                var isChecked by remember { mutableStateOf(true) }
                 Switch(
                     modifier = Modifier,
-                    checked = isChecked,
-                    onCheckedChange = { isChecked = it },
+                    checked = noRepeatNumber,
+                    onCheckedChange = { noRepeatNumber = it },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = Color.White,
                         checkedTrackColor = Color(0xFF15f4ee),
@@ -342,14 +341,9 @@ fun HomeScreen(
                     .padding(top = 30.dp)
                     .height(60.dp),
                 onClick = {
-                    viewModel.drawRandomNumber()
+                    viewModel.drawRandomNumber(quantity, minValue, maxValue, noRepeatNumber)
                     val number = viewModel.randomNumber.value
-                    if (number != null) {
-                        onNavigateToDraw(number)
-                    } else {
-                        // Mostrar erro ou log
-                        Log.e("HomeScreen", "Número sorteado é nulo")
-                    }
+                    onNavigateToDraw(number)
                 },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(

@@ -9,17 +9,18 @@ import kotlin.random.Random
 
 class HomeViewModel : ViewModel() {
 
-    private val _randomNumber = MutableStateFlow<Int?>(null)
-    val randomNumber: StateFlow<Int?> = _randomNumber
+    private val _randomNumber = MutableStateFlow<List<Int>>(emptyList())
+    val randomNumber: StateFlow<List<Int>> = _randomNumber
 
-    fun drawRandomNumber() {
+    fun drawRandomNumber(quantity: Int, minValue: Int, maxValue: Int, noRepeatNumber: Boolean) {
         viewModelScope.launch {
-            val number = Random.nextInt(1, 101)
+            val number = if (noRepeatNumber) {
+                val range = (minValue..maxValue).toList().shuffled()
+                range.take(quantity)
+            } else {
+                List(quantity) { Random.nextInt(minValue, maxValue + 1) }
+            }
             _randomNumber.value = number
         }
-    }
-
-    fun resetDraw() {
-        _randomNumber.value = null
     }
 }
