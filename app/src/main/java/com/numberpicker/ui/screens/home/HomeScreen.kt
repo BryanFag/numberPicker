@@ -196,7 +196,7 @@ fun HomeScreen(
                             expanded = selectNumberDraw,
                             onDismissRequest = { selectNumberDraw = false }
                         ) {
-                            (1..5).forEach { number ->
+                            (1..8).forEach { number ->
                                 DropdownMenuItem(
                                     text = { Text(number.toString()) },
                                     onClick = {
